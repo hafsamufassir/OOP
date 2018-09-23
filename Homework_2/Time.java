@@ -1,70 +1,52 @@
-public class Time
-{ 
-    // Instance Variables 
-    int hour;
-    int minute;
-    int second;
-    int value;
-  
-    // Constructor Declaration of Class 
-    public Time(int hour,int minute,int second) 
-    { 
-        this.hour = hour;
-        this.minute = minute;
-        this.second = second;
-    } 
-  
-    public int getHour(){
-        return hour;
-    }
-    
-    public int getMinute(){
-        return minute;
-    }
+import java.util.Scanner;
 
-    public int getSecond(){
-            //return second;
-            second = this.second % 60;
-            return second;
-    }
-    public void setHour(int h){
-        hour = h;
-    }
-    public void setMinute(int m){
-        minute = m;
-    }
-    public void setSecond(int s){
-        second = s;
-    }
+public class Time {
+	private int hour;
+	private int minute;
+	private int second;
+	
+	public Time(){
+	}
 
-    public void add(Time t){
-        int s = (this.second + t.second) % 60;
-        int m = (this.minute + t.minute + (this.second + t.second) / 60) % 60;
-        int h = (this.hour + t.hour + (this.minute + t.minute + (this.second + t.second) / 60) / 60) % 24;
-        String hr = Integer.toString(h);
-        String mn = Integer.toString(m);
-        String sc = Integer.toString(s);
-        if (h < 10)
-            hr = "0" + hr;
-        if (m < 10)
-            mn = "0" + mn;
-        if (s < 10)
-            sc = "0" + sc;
-        System.out.println(hr + ":" + mn + ":" + sc);
-    }
-    
-  
-    //@Override
-    public String toUniversal() 
-    { 
-        return(this.getHour()+":"+this.getMinute()+":"+this.getSecond());
-    } 
-  
-    public static void main(String[] args) 
-    { 
-        Time t = new Time(23,34,45);
-        System.out.println(t.toUniversal());
-        Time t2 = new Time(22,11,33);
-        t.add(t2);
-    } 
-} 
+	
+	public Time(int hour, int minute, int second){
+		if((hour >= 0 && hour < 24) && (minute >= 0 && minute < 60) && (second >= 0 && second < 60)){
+			this.hour = hour;
+			this.minute = minute;
+			this.second = second;
+		}
+		else{
+			throw new IllegalArgumentException("Hour, minute and/or second was out of range");
+		}
+	}
+	
+	public void add(Time a){
+		int lastSecond = this.second;
+		int lastMinute = this.minute;
+		this.second = (lastSecond + a.second) % 60;
+		this.minute = (lastMinute + a.minute) % 60 + (lastSecond + a.second) / 60;
+		this.hour = (this.hour + a.hour) % 24 + (lastMinute + a.minute) / 60; 
+		
+	}
+	
+	public String toUniversal(){
+		return String.format("%02d:%02d:%02d", hour, minute, second);
+	}
+	
+	public String toStandard(){
+		return String.format("%02d:%02d:%02d %s", ((hour == 0 || hour == 12) ? 12 : hour % 12), minute, second,
+				(hour < 12 ? "AM" : "PM"));
+	}
+
+	public static void main(String[] args){
+		Time t = new Time(13, 24, 8);
+		Time t2 = new Time(11, 35, 58);
+		
+		System.out.printf("Time 1:\n%s\n%s\n", t.toUniversal(), t.toStandard());
+		
+		System.out.println("\nTime 2:\n" + t2.toUniversal() +"\n" + t2.toStandard());
+		t.add(t2);
+		
+		System.out.printf("\nSum:\n%s\n%s", t.toUniversal(), t.toStandard());
+	}
+}

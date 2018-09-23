@@ -22,8 +22,8 @@ public static final String[] tens = {
 };
 
 public static String convert(int n) {
-	if (n < 0) {
-		return "Minus " + convert(-n);
+	if (n == 0) {
+		return "zero";
 	}
 
 	if (n < 20) {
@@ -42,21 +42,19 @@ public static String convert(int n) {
 		return convert(n / 1000) + " Thousand" + ((n % 10000 != 0) ? " " : "") + convert(n % 1000);
 	}
 
-	if (n < 10000000) {
-		return convert(n / 100000) + " Lakh" + ((n % 100000 != 0) ? " " : "") + convert(n % 100000);
+	return convert(n / 1000) + " Thousand" + ((n % 10000 != 0) ? " " : "") + convert(n % 1000);
+
+}
+
+	public static void main(final String[] args) {
+
+		int n;
+		Scanner input = new Scanner(System.in);
+		n = input.nextInt();
+		System.out.println(convert(n));
+
 	}
-
-	return convert(n / 10000000) + " Crore" + ((n % 10000000 != 0) ? " " : "") + convert(n % 10000000);
 }
 
-public static void main(final String[] args) {
-
-	int n;
-	Scanner input = new Scanner(System.in);
-    //System.out.println("Enter a number to convert into word format");
-	n = input.nextInt();
-	System.out.println(NumberFormat.getInstance().format(n) + "='" + convert(n) + "'");
-
-}
-}
+		//return "Minus " + convert(-n);
 
