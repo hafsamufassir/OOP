@@ -1,52 +1,103 @@
 import java.util.Scanner;
 
-public class Time {
-	private int hour;
-	private int minute;
-	private int second;
-	
-	public Time(){
-	}
+public class Time{
+    int hour;
+    int minute;
+    int second;
+    
+    Time(int hour, int minute, int second){
+        this.hour = hour;
+        this.minute = minute;
+        this.second = second;
+    }
+    
+    public void add(Time a){
+        hour += a.hour;
+        minute += a.minute;
+        second += a.second;
+        
+        if(second > 60){
+            if(second/60 > 0){
+                minute += second/60;
+            }
+            second = second % 60;
+        }
+        if(minute > 60){
+            if(minute/60 > 0){
+                hour += minute/60;
+            }
+            minute = minute % 60;
+        }
+        if(hour > 24){
+            hour = hour % 24;
+        }
 
-	
-	public Time(int hour, int minute, int second){
-		if((hour >= 0 && hour < 24) && (minute >= 0 && minute < 60) && (second >= 0 && second < 60)){
-			this.hour = hour;
-			this.minute = minute;
-			this.second = second;
-		}
-		else{
-			throw new IllegalArgumentException("Hour, minute and/or second was out of range");
-		}
-	}
-	
-	public void add(Time a){
-		int lastSecond = this.second;
-		int lastMinute = this.minute;
-		this.second = (lastSecond + a.second) % 60;
-		this.minute = (lastMinute + a.minute) % 60 + (lastSecond + a.second) / 60;
-		this.hour = (this.hour + a.hour) % 24 + (lastMinute + a.minute) / 60; 
-		
-	}
-	
-	public String toUniversal(){
-		return String.format("%02d:%02d:%02d", hour, minute, second);
-	}
-	
-	public String toStandard(){
-		return String.format("%02d:%02d:%02d %s", ((hour == 0 || hour == 12) ? 12 : hour % 12), minute, second,
-				(hour < 12 ? "AM" : "PM"));
-	}
+    }
+    
+    public void toStandart(){
+        String s = "";
 
-	public static void main(String[] args){
-		Time t = new Time(13, 24, 8);
-		Time t2 = new Time(11, 35, 58);
-		
-		System.out.printf("Time 1:\n%s\n%s\n", t.toUniversal(), t.toStandard());
-		
-		System.out.println("\nTime 2:\n" + t2.toUniversal() +"\n" + t2.toStandard());
-		t.add(t2);
-		
-		System.out.printf("\nSum:\n%s\n%s", t.toUniversal(), t.toStandard());
-	}
+        if(hour >= 10){
+            if(hour >=10 && hour < 12){
+                s = "" + hour;
+            }
+            else if(hour >= 12){
+                if(hour%12 >= 10){
+                    s = "" + hour%12;
+                }
+                else if(hour%12 < 10){
+                    s = "0" + hour%12;
+                }
+
+            }
+        }
+        else if(hour < 10){
+            s = "0" + hour;
+        }
+        if(minute >= 10){
+            s = s + ":" + minute;
+        }
+        else if(minute < 10){
+            s = s + ":0" + minute;
+        }
+        if(second >= 10){
+            s = s + ":" + second + " PM";
+        }
+        else if(second < 10){
+            s = s + ":0" + second + " PM";
+        }
+        System.out.println(s);
+    }
+    
+    public void toUniversal(){
+        String s = "";
+        if(hour >= 10){
+            s = "" + hour;
+        }
+        else if(hour < 10){
+            s = "0" + hour;
+        }
+        if(minute >= 10){
+            s = s + ":" + minute;
+        }
+        else if(minute < 10){
+            s = s + ":0" + minute;
+        }
+        if(second >= 10){
+            s = s + ":" + second + " ";
+        }
+        else if(second < 10){
+            s = s + ":0" + second + " ";
+        }
+        System.out.println(s);
+    }
+
+    public static void main(String[] args){
+        Time time = new Time(23,5,6);
+        //Time time2 = new Time(11,23,39);
+        //time.add(time2);
+        // System.out.println(time.toUniversal());
+        time.toUniversal();
+        time.toStandart();
+    }
 }
