@@ -5,9 +5,13 @@ public class Cylinder extends Shapes {
 //    public Cylinder(double volume, double area, double perimeter) {
 //        super(volume, area, perimeter);
 //    }
-
+    
+    private double h;
+    private double r;
+    
     public Cylinder(){
-        super();
+        this.r = r;
+        this.h = h;
     }
 
     public void computeVolume(double h, double r){

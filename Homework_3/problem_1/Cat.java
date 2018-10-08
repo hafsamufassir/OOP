@@ -1,5 +1,6 @@
 public class Cat extends Animal {
-    public int paws;
+    
+    
     public Cat() {
         super();
     }
@@ -17,6 +18,10 @@ public class Cat extends Animal {
         for(int i = 0; i < num; i++){
             System.out.println("Meow!");
         }
+    }
+    
+    public String getInfo() {
+        return "Animal: Cat\n" + super.getInfo();
     }
 
 }
