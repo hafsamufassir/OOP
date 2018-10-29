@@ -18,6 +18,7 @@ public class Manager extends Employee {
     }
     
     public boolean equals(Object obj) {
+        
         Manager m = (Manager)obj;
         return (super.equals(m) && this.team.equals(m.team) && this.bonus == m.bonus);
     }

@@ -1,7 +1,7 @@
 import static java.lang.Math.PI;
 import static java.lang.Math.pow;
 
-public class Sphere extends Shapes {
+abstract class Sphere extends Shapes {
 //    public Sphere(double volume, double area, double perimeter) {
 //        super(volume, area, perimeter);
 //    }

@@ -1,7 +1,7 @@
 import static java.lang.Math.PI;
 import static java.lang.Math.pow;
 
-public class Cube extends Shapes {
+abstract class Cube extends Shapes {
     private double a;
     
     public Cube(double a) {
